@@ -882,3 +882,216 @@ html.no-js .reviews__grid::after, html.no-js .about__stats::after {
   .stat::before { animation: none !important; }  /* kill the staggered reveal sweep (animation-delay is not zeroed by the block above) */
   .preloader.is-done { transform: translateY(-101%); transition: none; }
 }
+
+/* ============================================================
+   REVIEW PAGE  (review.html — 2-question client feedback form)
+   Self-contained: delete this block AND review.html to remove.
+   Form posts to formsubmit.co/paulabaho747@gmail.com.
+   ============================================================ */
+
+.review-page {
+  /* identical base to the main site — no nav, no scene counter,
+     no preloader, no letterbox. Just the form. */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(40px, 8vh, 90px) var(--pad-x) clamp(60px, 10vh, 120px);
+}
+
+.review {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.review__back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: clamp(32px, 6vh, 60px);
+  transition: color .25s ease, transform .25s ease;
+}
+.review__back:hover { color: var(--gold); transform: translateX(-3px); }
+
+.review__head { margin-bottom: clamp(40px, 7vh, 70px); }
+
+.review__meta {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 22px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+}
+
+.review__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(48px, 9vw, 96px);
+  line-height: .92;
+  letter-spacing: -.01em;
+  margin-bottom: 22px;
+  color: var(--text);
+}
+
+.review__lead {
+  font-size: clamp(15px, 1.5vw, 18px);
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.review__form {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vh, 44px);
+}
+
+/* honeypot — keep it out of layout, screenreaders, and tab order */
+.hp { position: absolute !important; left: -9999px !important; opacity: 0 !important; pointer-events: none; }
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.field__label {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.field__num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .18em;
+  color: var(--gold);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.field__q {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.15;
+  letter-spacing: .005em;
+  color: var(--text);
+}
+
+.field__hint {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-top: -2px;
+  padding-left: 38px;  /* align under .field__q, after the number column */
+}
+
+.field textarea {
+  margin-top: 4px;
+  padding-left: 38px;  /* same as hint — line up under the question text */
+  width: 100%;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding: 16px 18px 18px;
+  resize: vertical;
+  min-height: 96px;
+  transition: border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  caret-color: var(--gold);
+}
+
+.field textarea::placeholder { color: var(--faint); }
+
+.field textarea:hover {
+  border-color: rgba(245, 197, 24, .35);
+}
+
+.field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: var(--ink-2);
+  box-shadow: 0 0 0 3px rgba(245, 197, 24, .12);
+}
+
+.field textarea:invalid:not(:placeholder-shown) {
+  border-color: rgba(245, 197, 24, .25);  /* not full red — gold brand language */
+}
+
+.field__count {
+  position: absolute;
+  right: 0;
+  bottom: -22px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--faint);
+}
+.field__count.is-warn { color: var(--gold); }
+
+.review__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.review__actions .btn { min-width: 200px; }
+.review__actions .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.review__small {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--faint);
+  max-width: 50ch;
+  line-height: 1.7;
+}
+
+/* On narrow viewports, drop the column alignment for hint + textarea so they fill the row */
+@media (max-width: 540px) {
+  .field__hint,
+  .field textarea { padding-left: 0; }
+  .field__count { right: 4px; }
+}
+
+/* Reveal on this page: just fade + small rise (no IntersectionObserver in main.js) */
+@media (prefers-reduced-motion: no-preference) {
+  .review-page .reveal {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: reviewIn .9s var(--ease) forwards;
+  }
+  .review-page .reveal:nth-of-type(1) { animation-delay: .05s; }
+  .review-page .reveal:nth-of-type(2) { animation-delay: .18s; }
+  .review-page .reveal:nth-of-type(3) { animation-delay: .31s; }
+  .review-page .reveal:nth-of-type(4) { animation-delay: .44s; }
+  @keyframes reviewIn {
+    to { opacity: 1; transform: none; }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .review-page .reveal { opacity: 1; transform: none; animation: none; }
+}
+
+/* Small-screen padding bump so the form has breathing room on phones */
+@media (max-width: 420px) {
+  .review-page { padding-left: 18px; padding-right: 18px; }
+}

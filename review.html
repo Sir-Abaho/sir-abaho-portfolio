@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Review — Sir Abaho</title>
+  <meta name="description" content="A two-question review for clients of Sir Abaho. Short, anonymous, takes 30 seconds." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe37a'/%3E%3Cstop offset='1' stop-color='%23a37400'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.5' cy='.45' r='.6'%3E%3Cstop offset='0' stop-color='%23f5c518' stop-opacity='.55'/%3E%3Cstop offset='1' stop-color='%23f5c518' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='64' height='64' fill='%23060504'/%3E%3Cg transform='scale(.32)'%3E%3Cg fill='url(%23g)'%3E%3Cpath d='M72 170c5-28 11-42 22-49l6-2 6 2c11 7 17 21 22 49z'/%3E%3Ccircle cx='100' cy='82' r='17'/%3E%3Cpath d='M66 89a35 10 0 0 1 68 0z'/%3E%3C/g%3E%3Ccircle cx='100' cy='100' r='86' fill='url(%23f)'/%3E%3Ctext x='100' y='150' text-anchor='middle' font-family='JetBrains Mono, monospace' font-size='17' letter-spacing='4' fill='%23f5c518'%3ESA%3C/text%3E%3C/g%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="review-page">
+
+  <a class="skip-link" href="#q1">Skip to the form</a>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <main class="review" id="top">
+    <a class="review__back" href="index.html" aria-label="Back to the main portfolio">← SIR-ABAHO.PORTFOLIO</a>
+
+    <div class="review__head">
+      <span class="review__meta">QUICK FEEDBACK · 30 SECONDS · ANONYMOUS</span>
+      <h1 class="review__title">TWO <span class="grad">QUESTIONS</span></h1>
+      <p class="review__lead">A short note from you helps the next person decide. Pick the lines that match how you actually felt — the best ones might end up on the portfolio with your permission later.</p>
+    </div>
+
+    <form class="review__form"
+          action="https://formsubmit.co/paulabaho747@gmail.com"
+          method="POST"
+          novalidate>
+
+      <!-- FormSubmit config -->
+      <input type="hidden" name="_subject" value="New portfolio review" />
+      <input type="hidden" name="_template" value="box" />
+      <input type="hidden" name="_captcha" value="true" />
+      <!-- Honeypot: bots fill it, humans don't see it -->
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true" />
+
+      <div class="field reveal" id="q1">
+        <label class="field__label" for="what">
+          <span class="field__num">01</span>
+          <span class="field__q">What did you hire Sir Abaho for?</span>
+        </label>
+        <p class="field__hint">One line is plenty. A hotel promo, a wedding, a product reel, an event — whatever it was.</p>
+        <textarea id="what" name="what" rows="3" required minlength="3" maxlength="400"
+                  placeholder="e.g. A 60-second promo reel for our new restaurant menu"></textarea>
+        <span class="field__count" data-for="what" aria-live="polite">0 / 400</span>
+      </div>
+
+      <div class="field reveal" id="q2">
+        <label class="field__label" for="worth">
+          <span class="field__num">02</span>
+          <span class="field__q">What was the one thing that made it worth it?</span>
+        </label>
+        <p class="field__hint">The reason you'd recommend him (or wouldn't). Honest beats polished here.</p>
+        <textarea id="worth" name="worth" rows="4" required minlength="3" maxlength="600"
+                  placeholder="e.g. He finished a day early and the final cut was sharper than I expected."></textarea>
+        <span class="field__count" data-for="worth" aria-live="polite">0 / 600</span>
+      </div>
+
+      <div class="review__actions reveal">
+        <button type="submit" class="btn btn--gold">SEND REVIEW →</button>
+        <p class="review__small">Anonymous. Two questions. No tracking, no newsletter, no follow-up email.</p>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+      // Live char counters
+      var counters = document.querySelectorAll(".field__count");
+      Array.prototype.forEach.call(counters, function (el) {
+        var target = document.getElementById(el.getAttribute("data-for"));
+        if (!target) return;
+        var max = parseInt(target.getAttribute("maxlength"), 10) || 0;
+        var update = function () {
+          var len = target.value.length;
+          el.textContent = len + " / " + max;
+          if (max && len > max * 0.9) el.classList.add("is-warn");
+          else el.classList.remove("is-warn");
+        };
+        target.addEventListener("input", update);
+        update();
+      });
+
+      // Disable submit after click to prevent double submits
+      var form = document.querySelector(".review__form");
+      if (form) {
+        form.addEventListener("submit", function () {
+          var btn = form.querySelector("button[type=submit]");
+          if (btn) {
+            btn.disabled = true;
+            btn.textContent = "SENDING…";
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
