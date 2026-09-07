@@ -105,33 +105,20 @@
       .catch(function () { cb(null); });
   }
 
-  function setCardThumb(img, reel) {
-    if (!img) return;
-    var visual = img.parentElement;
-    var reveal = function () {
-      if (visual) visual.classList.add("reel__visual--has-thumb");
-    };
+  // Apply thumbnail as a CSS background-image on the .reel__visual container.
+  // Bypasses all <img> + opacity + crossOrigin complexity.
+  function setCardThumb(visual, reel) {
+    if (!visual) return;
     resolveThumb(reel, function (url) {
-      if (!url) { img.remove(); return; }
-      img.alt = reel.title || "Reel thumbnail";
-      img.crossOrigin = "anonymous";  // some CDNs require this even for <img>
-      // If the image is already in the browser cache, the `load` event
-      // can fire before this listener is attached. Handle that race.
-      img.addEventListener("load", function () {
-        console.log("[reel-thumb] loaded", url, "naturalWidth:", img.naturalWidth);
-        reveal();
-      }, { once: true });
-      img.addEventListener("error", function (e) {
-        console.log("[reel-thumb] ERROR loading", url, e);
-        img.remove();
-      }, { once: true });
-      console.log("[reel-thumb] setting src", url);
-      img.src = url;
-      // Handle cached/loaded images synchronously
-      if (img.complete && img.naturalWidth > 0) {
-        console.log("[reel-thumb] already complete (cached)");
-        reveal();
-      }
+      if (!url) return;
+      // Preload the image to verify it loads before applying as background
+      var probe = new Image();
+      probe.onload = function () {
+        visual.style.setProperty("--thumb", "url(\"" + url + "\")");
+        visual.classList.add("reel__visual--has-thumb");
+      };
+      probe.onerror = function () { /* keep gradient fallback */ };
+      probe.src = url;
     });
   }
 
@@ -213,10 +200,8 @@
       card.style.setProperty("--g1", (reel.art && reel.art[0]) || "#3a2a05");
       card.style.setProperty("--g2", (reel.art && reel.art[1]) || "#140d03");
 
-      var thumbHtml = '<img class="reel__thumb" loading="lazy" decoding="async" />';
       var visual =
         '<div class="reel__visual">' +
-        thumbHtml +
         '<span class="reel__chip">' + (reel.category || "REEL") + "</span>" +
         '<span class="reel__platform">' + (ICONS[reel.platform] || ICONS.tiktok) + "</span>" +
         '<div class="reel__fig">' + FIG + "</div>" +
@@ -238,8 +223,8 @@
           b.addEventListener("click", function () { openReelModal(r); });
         })(reel, btn);
         card.appendChild(btn);
-        // Wire the thumbnail image (it was created in visual above)
-        setCardThumb(card.querySelector(".reel__thumb"), reel);
+        // Wire the thumbnail against the .reel__visual container
+        setCardThumb(btn.querySelector(".reel__visual"), reel);
       } else {
         var div = document.createElement("div");
         div.className = "reel__link is-soon";
