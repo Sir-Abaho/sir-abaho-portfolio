@@ -114,12 +114,24 @@
     resolveThumb(reel, function (url) {
       if (!url) { img.remove(); return; }
       img.alt = reel.title || "Reel thumbnail";
+      img.crossOrigin = "anonymous";  // some CDNs require this even for <img>
       // If the image is already in the browser cache, the `load` event
       // can fire before this listener is attached. Handle that race.
-      img.addEventListener("load", reveal, { once: true });
-      img.addEventListener("error", function () { img.remove(); }, { once: true });
+      img.addEventListener("load", function () {
+        console.log("[reel-thumb] loaded", url, "naturalWidth:", img.naturalWidth);
+        reveal();
+      }, { once: true });
+      img.addEventListener("error", function (e) {
+        console.log("[reel-thumb] ERROR loading", url, e);
+        img.remove();
+      }, { once: true });
+      console.log("[reel-thumb] setting src", url);
       img.src = url;
-      if (img.complete && img.naturalWidth > 0) reveal();
+      // Handle cached/loaded images synchronously
+      if (img.complete && img.naturalWidth > 0) {
+        console.log("[reel-thumb] already complete (cached)");
+        reveal();
+      }
     });
   }
 
