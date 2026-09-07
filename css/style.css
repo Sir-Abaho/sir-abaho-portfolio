@@ -1095,3 +1095,121 @@ html.no-js .reviews__grid::after, html.no-js .about__stats::after {
 @media (max-width: 420px) {
   .review-page { padding-left: 18px; padding-right: 18px; }
 }
+
+/* ============================================================
+   REEL THUMBNAIL  (real image on top of the gradient)
+   When the .reel__thumb <img> loads, the .reel__visual--has-thumb
+   class hides the gradient + the FIG watermark so the photo
+   stands alone. Falls back to the original gradient if no thumb.
+   ============================================================ */
+.reel__thumb {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  z-index: 0; opacity: 0; transition: opacity .45s ease;
+  background: linear-gradient(160deg, var(--g1, #3a2a05), var(--g2, #140d03));
+}
+.reel__visual--has-thumb .reel__thumb { opacity: 1; }
+.reel__visual--has-thumb { background: #000; }
+.reel__visual--has-thumb .reel__fig { opacity: .08; }
+
+/* ============================================================
+   REEL MODAL  (in-place player — opens on card click)
+   Self-contained: delete this block + the modal markup in
+   index.html to fall back to the "open in new tab" behavior.
+   ============================================================ */
+body.modal-open { overflow: hidden; }
+
+.reel-modal {
+  position: fixed; inset: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  background: rgba(6, 5, 4, .78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.reel-modal[hidden] { display: none; }
+
+.reel-modal__backdrop {
+  position: absolute; inset: 0;
+  cursor: pointer;
+}
+
+.reel-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  max-height: calc(100vh - 32px);
+  display: flex; flex-direction: column;
+  background: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .65), 0 0 0 1px rgba(245, 197, 24, .08);
+  animation: reelModalIn .35s var(--ease);
+}
+@keyframes reelModalIn {
+  from { opacity: 0; transform: translateY(10px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reel-modal__dialog { animation: none; }
+}
+
+.reel-modal__close {
+  position: absolute; top: -1px; right: -1px; z-index: 5;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  background: var(--ink-2);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-top: 0; border-right: 0;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease;
+}
+.reel-modal__close:hover { color: var(--gold); background: var(--ink); }
+.reel-modal__close svg { width: 18px; height: 18px; }
+.reel-modal__close:focus-visible { outline: 2px solid var(--gold); outline-offset: -3px; }
+
+.reel-modal__player {
+  position: relative;
+  width: 100%;
+  /* 9:16 portrait — matches TikTok/IG reels */
+  aspect-ratio: 9 / 16;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.reel-modal__iframe {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+.reel-modal__empty {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--faint);
+  padding: 20px; text-align: center;
+}
+
+.reel-modal__meta {
+  padding: 18px 20px 20px;
+  display: flex; flex-direction: column; gap: 6px;
+  border-top: 1px solid var(--line);
+}
+.reel-modal__title {
+  font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+  letter-spacing: .04em; color: var(--text);
+}
+.reel-modal__sub {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: 12.5px; color: var(--muted);
+}
+.reel-modal__sep { color: var(--faint); }
+.reel-modal__platform { color: var(--gold); font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+.reel-modal__fallback {
+  margin-top: 8px;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  transition: color .2s ease;
+}
+.reel-modal__fallback:hover { color: var(--gold); }
+.reel-modal__fallback:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }

@@ -256,7 +256,7 @@
       <div class="wrap">
         <div class="section__meta reveal">SCENE 04 — THE REELS</div>
         <h2 class="section__title reveal">THE <span class="grad">REELS</span></h2>
-        <p class="section__lead reveal">Fresh work lands here as it's posted. Tap a reel to watch it on the platform.</p>
+        <p class="section__lead reveal">Fresh work lands here as it's posted. Tap a reel to play it here — no app, no leaving the page.</p>
         <div class="work__grid" id="reelGrid" aria-live="polite"></div>
       </div>
     </section>
@@ -404,5 +404,25 @@
   <script src="js/videos.js"></script>
   <script src="js/site-data.js"></script>
   <script src="js/main.js"></script>
+
+  <!-- ============ REEL MODAL (populated by main.js) ============ -->
+  <div class="reel-modal" id="reelModal" aria-hidden="true" hidden>
+    <div class="reel-modal__backdrop" data-reel-close></div>
+    <div class="reel-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="reelModalTitle">
+      <button class="reel-modal__close" type="button" data-reel-close aria-label="Close reel">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="reel-modal__player" id="reelModalPlayer" aria-live="polite"></div>
+      <div class="reel-modal__meta">
+        <div class="reel-modal__title" id="reelModalTitle"></div>
+        <div class="reel-modal__sub">
+          <span class="reel-modal__client" id="reelModalClient"></span>
+          <span class="reel-modal__sep" aria-hidden="true">·</span>
+          <span class="reel-modal__platform" id="reelModalPlatform"></span>
+        </div>
+        <a class="reel-modal__fallback" id="reelModalFallback" href="#" target="_blank" rel="noopener">Open on <span id="reelModalFallbackName">the platform</span> →</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

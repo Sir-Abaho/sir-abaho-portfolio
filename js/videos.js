@@ -19,6 +19,14 @@
 
 const REELS = [
   {
+    title: "Test reel — TikTok embed",
+    client: "Real client",
+    category: "PRODUCT",
+    platform: "tiktok",
+    link: "https://www.tiktok.com/@polo_abaho/video/7664666054429248789",
+    art: ["#3a2a05", "#140d03"]
+  },
+  {
     title: "Kitchenware — 30s product film",
     client: "Kitchenware Shop",
     category: "PRODUCT",

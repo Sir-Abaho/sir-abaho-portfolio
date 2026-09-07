@@ -59,7 +59,12 @@
   }
 
   /* ============================================================
-     REELS RENDERER
+     REELS RENDERER  +  IN-PLACE MODAL PLAYER
+     - Cards open a modal with the official platform embed
+       (TikTok / Instagram / YouTube) instead of leaving the site.
+     - TikTok thumbnails auto-fetched via oEmbed (CORS-friendly,
+       no auth). Instagram: paste a `thumb` URL yourself.
+     - Reduced-motion: modal fades only, no scale.
      ============================================================ */
   var ICONS = {
     tiktok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.6 6.7a4.8 4.8 0 0 1-3.4-1.4 4.8 4.8 0 0 1-1.4-3.3h-3.3v13.4a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a6 6 0 0 0-.8-.1 6 6 0 1 0 6 6V9.9a7.9 7.9 0 0 0 4.8 1.6V8.2c-.6 0-1.3-.1-1.9-.4v3.4a7.9 7.9 0 0 1-4.8 1.6 5.9 5.9 0 0 1-1.2-.1v3.4c.4.1.8.1 1.2.1a6 6 0 0 0 6-6c0-.3 0-.6-.1-.9z"/></svg>',
@@ -72,6 +77,118 @@
   var PLATFORM_NAME = { tiktok: "TikTok", instagram: "Instagram", youtube: "YouTube" };
 
   var grid = $("#reelGrid");
+  var modal = $("#reelModal");
+  var modalPlayer = $("#reelModalPlayer");
+  var modalTitle = $("#reelModalTitle");
+  var modalClient = $("#reelModalClient");
+  var modalPlatform = $("#reelModalPlatform");
+  var modalFallback = $("#reelModalFallback");
+  var modalFallbackName = $("#reelModalFallbackName");
+  var lastFocused = null;
+
+  // Resolve a thumbnail: prefer `thumb` field, then oEmbed for TikTok, else gradient
+  var thumbCache = Object.create(null);
+  function resolveThumb(reel, cb) {
+    if (!reel || !reel.platform) return cb(null);
+    if (reel.thumb) return cb(reel.thumb);
+    if (reel.platform !== "tiktok" || !reel.link) return cb(null);
+    var key = reel.link;
+    if (thumbCache[key]) return cb(thumbCache[key]);
+    var endpoint = "https://www.tiktok.com/oembed?url=" + encodeURIComponent(reel.link);
+    fetch(endpoint, { method: "GET" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        var url = (j && j.thumbnail_url) || null;
+        if (url) thumbCache[key] = url;
+        cb(url);
+      })
+      .catch(function () { cb(null); });
+  }
+
+  function setCardThumb(img, reel) {
+    if (!img) return;
+    resolveThumb(reel, function (url) {
+      if (!url) { img.remove(); return; }
+      img.src = url;
+      img.alt = reel.title || "Reel thumbnail";
+      img.addEventListener("load", function () {
+        img.parentElement && img.parentElement.classList.add("reel__visual--has-thumb");
+      });
+      img.addEventListener("error", function () { img.remove(); });
+    });
+  }
+
+  function openReelModal(reel) {
+    if (!modal || !modalPlayer) return;
+    lastFocused = document.activeElement;
+    modalPlayer.innerHTML = "";
+    modalTitle.textContent = reel.title || "Reel";
+    modalClient.textContent = reel.client || "";
+    modalPlatform.textContent = PLATFORM_NAME[reel.platform] || "the platform";
+    if (reel.link) {
+      modalFallback.href = reel.link;
+      modalFallbackName.textContent = PLATFORM_NAME[reel.platform] || "the platform";
+      modalFallback.style.display = "";
+    } else {
+      modalFallback.style.display = "none";
+    }
+
+    // Build the embed inside the modal
+    var embedUrl = reel.embed || buildEmbedUrl(reel);
+    if (embedUrl) {
+      var iframe = document.createElement("iframe");
+      iframe.src = embedUrl;
+      iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+      iframe.allowFullscreen = true;
+      iframe.setAttribute("frameborder", "0");
+      iframe.setAttribute("scrolling", "no");
+      iframe.setAttribute("title", reel.title || "Embedded reel");
+      iframe.className = "reel-modal__iframe";
+      modalPlayer.appendChild(iframe);
+    } else {
+      modalPlayer.innerHTML = '<div class="reel-modal__empty">No embed available for this platform yet.</div>';
+    }
+
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    // Focus the close button for keyboard users
+    var closeBtn = modal.querySelector(".reel-modal__close");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeReelModal() {
+    if (!modal) return;
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    if (modalPlayer) modalPlayer.innerHTML = "";
+    document.body.classList.remove("modal-open");
+    if (lastFocused && typeof lastFocused.focus === "function") {
+      try { lastFocused.focus(); } catch (e) {}
+    }
+  }
+
+  function buildEmbedUrl(reel) {
+    if (!reel || !reel.platform || !reel.link) return "";
+    var link = reel.link;
+    if (reel.platform === "tiktok") {
+      // Accept full URL or just /video/<id>; emit the official embed
+      var m = link.match(/\/video\/(\d+)/);
+      var id = m ? m[1] : "";
+      return id ? "https://www.tiktok.com/embed/v2/" + id + "?lang=en-US" : "";
+    }
+    if (reel.platform === "instagram") {
+      // IG embed expects the /reel/<id>/ or /p/<id>/ URL
+      return link.replace(/\?.*$/, "").replace(/\/$/, "") + "/embed";
+    }
+    if (reel.platform === "youtube") {
+      // Accept watch?v= or youtu.be/
+      var idm = link.match(/(?:v=|youtu\.be\/)([\w-]{6,})/);
+      return idm ? "https://www.youtube.com/embed/" + idm[1] + "?autoplay=1&rel=0" : "";
+    }
+    return "";
+  }
+
   if (grid && typeof REELS !== "undefined") {
     REELS.forEach(function (reel, i) {
       var card = document.createElement("article");
@@ -79,8 +196,10 @@
       card.style.setProperty("--g1", (reel.art && reel.art[0]) || "#3a2a05");
       card.style.setProperty("--g2", (reel.art && reel.art[1]) || "#140d03");
 
+      var thumbHtml = '<img class="reel__thumb" loading="lazy" decoding="async" />';
       var visual =
         '<div class="reel__visual">' +
+        thumbHtml +
         '<span class="reel__chip">' + (reel.category || "REEL") + "</span>" +
         '<span class="reel__platform">' + (ICONS[reel.platform] || ICONS.tiktok) + "</span>" +
         '<div class="reel__fig">' + FIG + "</div>" +
@@ -93,14 +212,17 @@
         "</div>";
 
       if (reel.link) {
-        var a = document.createElement("a");
-        a.className = "reel__link";
-        a.href = reel.link;
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.setAttribute("aria-label", "Watch " + (reel.title || "reel") + " on " + (PLATFORM_NAME[reel.platform] || "the platform"));
-        a.innerHTML = visual;
-        card.appendChild(a);
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "reel__link";
+        btn.setAttribute("aria-label", "Play " + (reel.title || "reel") + " here");
+        btn.innerHTML = visual;
+        (function (r, b) {
+          b.addEventListener("click", function () { openReelModal(r); });
+        })(reel, btn);
+        card.appendChild(btn);
+        // Wire the thumbnail image (it was created in visual above)
+        setCardThumb(card.querySelector(".reel__thumb"), reel);
       } else {
         var div = document.createElement("div");
         div.className = "reel__link is-soon";
@@ -109,6 +231,17 @@
         card.appendChild(div);
       }
       grid.appendChild(card);
+    });
+  }
+
+  // Modal: close on backdrop, close button, ESC
+  if (modal) {
+    var closers = modal.querySelectorAll("[data-reel-close]");
+    Array.prototype.forEach.call(closers, function (el) {
+      el.addEventListener("click", closeReelModal);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !modal.hidden) closeReelModal();
     });
   }
 
