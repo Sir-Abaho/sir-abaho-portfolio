@@ -1104,12 +1104,15 @@ html.no-js .reviews__grid::after, html.no-js .about__stats::after {
    ============================================================ */
 .reel__thumb {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  z-index: 0; opacity: 0; transition: opacity .45s ease;
+  z-index: 0; opacity: 0; transition: opacity .4s ease;
   background: linear-gradient(160deg, var(--g1, #3a2a05), var(--g2, #140d03));
 }
 .reel__visual--has-thumb .reel__thumb { opacity: 1; }
 .reel__visual--has-thumb { background: #000; }
 .reel__visual--has-thumb .reel__fig { opacity: .08; }
+@media (prefers-reduced-motion: reduce) {
+  .reel__thumb { transition: none; }
+}
 
 /* ============================================================
    REEL MODAL  (in-place player — opens on card click)

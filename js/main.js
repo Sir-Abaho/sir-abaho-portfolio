@@ -107,14 +107,19 @@
 
   function setCardThumb(img, reel) {
     if (!img) return;
+    var visual = img.parentElement;
+    var reveal = function () {
+      if (visual) visual.classList.add("reel__visual--has-thumb");
+    };
     resolveThumb(reel, function (url) {
       if (!url) { img.remove(); return; }
-      img.src = url;
       img.alt = reel.title || "Reel thumbnail";
-      img.addEventListener("load", function () {
-        img.parentElement && img.parentElement.classList.add("reel__visual--has-thumb");
-      });
-      img.addEventListener("error", function () { img.remove(); });
+      // If the image is already in the browser cache, the `load` event
+      // can fire before this listener is attached. Handle that race.
+      img.addEventListener("load", reveal, { once: true });
+      img.addEventListener("error", function () { img.remove(); }, { once: true });
+      img.src = url;
+      if (img.complete && img.naturalWidth > 0) reveal();
     });
   }
 
