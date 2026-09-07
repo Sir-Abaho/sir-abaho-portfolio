@@ -51,6 +51,13 @@ stay identical.
 2. Drag this whole folder in.
 3. Done — you get a live link. No build step needed.
 
+## Client review form (`/review`)
+
+A standalone 2-question form at `sir-abaho-portfolio.vercel.app/review` —
+send that link to clients to capture quick feedback. Responses land in your
+inbox via FormSubmit (configured in `review/index.html`).
+See the "Review page" note in `BWAT.md` for activation + removal steps.
+
 ## Tech
 
 Plain HTML / CSS / JavaScript. No frameworks, no build step, no accounts
