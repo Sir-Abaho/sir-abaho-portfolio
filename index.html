@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIR-ABAHO — Cinematic Videographer</title>
+  <meta name="description" content="Sir Abaho — cinematic videographer. Short, sharp films and product reels for businesses, plus event coverage. Instagram, TikTok & YouTube. Uganda." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffe37a'/%3E%3Cstop offset='1' stop-color='%23a37400'/%3E%3C/linearGradient%3E%3CradialGradient id='f' cx='.5' cy='.45' r='.6'%3E%3Cstop offset='0' stop-color='%23f5c518' stop-opacity='.55'/%3E%3Cstop offset='1' stop-color='%23f5c518' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='64' height='64' fill='%23060504'/%3E%3Cg transform='scale(.32)'%3E%3Cg fill='url(%23g)'%3E%3Cpath d='M72 170c5-28 11-42 22-49l6-2 6 2c11 7 17 21 22 49z'/%3E%3Ccircle cx='100' cy='82' r='17'/%3E%3Cpath d='M66 89a35 10 0 0 1 68 0z'/%3E%3C/g%3E%3Ccircle cx='100' cy='100' r='86' fill='url(%23f)'/%3E%3Ctext x='100' y='150' text-anchor='middle' font-family='JetBrains Mono, monospace' font-size='17' letter-spacing='4' fill='%23f5c518'%3ESA%3C/text%3E%3C/g%3E%3C/svg%3E" />
+
+  <!-- Fonts: Anton (display) · Manrope (body) · JetBrains Mono (slate labels) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body id="top">
+
+  <a class="skip-link" href="#work">Skip to the reels</a>
+
+  <!-- Film grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Cinema letterbox -->
+  <div class="letterbox letterbox--top" aria-hidden="true"></div>
+  <div class="letterbox letterbox--bottom" aria-hidden="true"></div>
+
+  <!-- Scroll progress -->
+  <div class="progress" aria-hidden="true"><i></i></div>
+
+  <!-- Scene counter -->
+  <div class="scene-counter" aria-hidden="true">SCENE 01/08</div>
+
+  <!-- ============ PRELOADER ============ -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__mark">
+      <!-- FOG CIRCLE mark — figure + fog halo + SA monogram -->
+      <svg viewBox="0 0 200 200" width="64" height="64" aria-hidden="true">
+        <defs>
+          <linearGradient id="pl-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffe37a"/><stop offset="1" stop-color="#a37400"/>
+          </linearGradient>
+          <radialGradient id="pl-f" cx=".5" cy=".45" r=".6">
+            <stop offset="0" stop-color="#f5c518" stop-opacity=".55"/><stop offset="1" stop-color="#f5c518" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g fill="url(#pl-g)">
+          <path d="M72 170c5-28 11-42 22-49l6-2 6 2c11 7 17 21 22 49z"/>
+          <circle cx="100" cy="82" r="17"/>
+          <path d="M66 89a35 10 0 0 1 68 0z"/>
+        </g>
+        <circle cx="100" cy="100" r="86" fill="url(#pl-f)"/>
+        <text x="100" y="150" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="17" letter-spacing="4" fill="#f5c518">SA</text>
+      </svg>
+    </div>
+    <div class="preloader__name">SIR-ABAHO</div>
+    <div class="preloader__count"><span id="preCount">0</span>%</div>
+    <div class="preloader__bar"><i></i></div>
+  </div>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <a class="nav__mark" href="#top" aria-label="Sir Abaho — back to top">
+      <svg viewBox="0 0 200 200" width="30" height="30" aria-hidden="true">
+        <defs>
+          <linearGradient id="nv-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffe37a"/><stop offset="1" stop-color="#a37400"/>
+          </linearGradient>
+          <radialGradient id="nv-f" cx=".5" cy=".45" r=".6">
+            <stop offset="0" stop-color="#f5c518" stop-opacity=".55"/><stop offset="1" stop-color="#f5c518" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g fill="url(#nv-g)">
+          <path d="M72 170c5-28 11-42 22-49l6-2 6 2c11 7 17 21 22 49z"/>
+          <circle cx="100" cy="82" r="17"/>
+          <path d="M66 89a35 10 0 0 1 68 0z"/>
+        </g>
+        <circle cx="100" cy="100" r="86" fill="url(#nv-f)"/>
+      </svg>
+      <span>SIR-ABAHO</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#web">Web</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav__cta" href="https://wa.me/256768715617?text=Hey%20Sir%20Abaho!%20I%20saw%20your%20portfolio%20and%20I%27d%20love%20to%20talk%20about%20a%20video%20project." target="_blank" rel="noopener">Hire me</a>
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <i></i><i></i><i></i>
+    </button>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <nav aria-label="Mobile">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#web">Web</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="mobile-menu__actions">
+      <a class="btn btn--wa" href="https://wa.me/256768715617?text=Hey%20Sir%20Abaho!%20I%20saw%20your%20portfolio%20and%20I%27d%20love%20to%20talk%20about%20a%20video%20project." target="_blank" rel="noopener">WhatsApp me</a>
+      <a class="btn btn--call" href="tel:+256768715617">Call +256 768 715 617</a>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero section" id="home" data-scene="01">
+      <div class="hero__fog hero__fog--1" aria-hidden="true"></div>
+      <div class="hero__fog hero__fog--2" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <div class="hero__slate reveal">SCENE 01 — THE INTRO</div>
+        <div class="hero__stage" id="heroStage">
+          <div class="hero__rise">
+            <h1 class="hero__title" id="heroTitle" aria-label="SIR-ABAHO">
+              <span class="hero__face" data-text="SIR-ABAHO">SIR-ABAHO</span>
+            </h1>
+          </div>
+        </div>
+        <p class="hero__tag reveal">CINEMATIC STORYTELLING FOR BUSINESSES &amp; BRANDS</p>
+        <p class="hero__sub reveal">I make short, sharp films that stop the scroll — product reels, social media and event films. If you sell it, I make it look unforgettable.</p>
+        <div class="hero__cta reveal">
+          <a class="btn btn--gold" href="https://wa.me/256768715617?text=Hey%20Sir%20Abaho!%20I%20saw%20your%20portfolio%20and%20I%27d%20love%20to%20talk%20about%20a%20video%20project." target="_blank" rel="noopener">Start a project</a>
+          <a class="btn btn--ghost" href="tel:+256768715617">
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1z"/></svg>
+            Call +256 768 715 617
+          </a>
+        </div>
+        <div class="hero__scroll reveal" aria-hidden="true">
+          <span>SCROLL TO EXPLORE</span><i></i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>CINEMATIC&nbsp;✦&nbsp;ENERGETIC&nbsp;✦&nbsp;INTENTIONAL&nbsp;✦&nbsp;TRANSCENDING&nbsp;✦&nbsp;SHORT&nbsp;FILMS&nbsp;✦&nbsp;PRODUCT&nbsp;REELS&nbsp;✦&nbsp;EVENT&nbsp;COVERAGE&nbsp;✦&nbsp;</span>
+        <span>CINEMATIC&nbsp;✦&nbsp;ENERGETIC&nbsp;✦&nbsp;INTENTIONAL&nbsp;✦&nbsp;TRANSCENDING&nbsp;✦&nbsp;SHORT&nbsp;FILMS&nbsp;✦&nbsp;PRODUCT&nbsp;REELS&nbsp;✦&nbsp;EVENT&nbsp;COVERAGE&nbsp;✦&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="about section" id="about" data-scene="02">
+      <div class="wrap">
+        <div class="section__meta reveal">SCENE 02 — THE MAN BEHIND THE LENS</div>
+        <h2 class="section__title reveal">BEHIND <span class="grad">THE LENS</span></h2>
+        <div class="about__grid">
+          <div class="about__copy">
+            <p class="reveal">I'm Sir Abaho. I shoot and edit short, cinematic videos for businesses — kitchenware shops, beauty salons, supermarkets, barber shops, real estate, hotels and airbnbs. The kind of videos that make people stop, look, and buy.</p>
+            <p class="reveal">No boring ads. No corporate talk. Just sharp visuals with a message that lands. And when it's a birthday, a cookout, a brunch or a gathering — I'm there to capture the moment like a film.</p>
+            <p class="reveal">Every project runs the same way: I show up prepared, direct the shoot so you look your best, and cut until it feels like a film — not a home video. One clear brief, one final cut, zero stress on your side.</p>
+            <a class="btn btn--ghost reveal" href="#work">See the reels</a>
+          </div>
+          <div class="about__stats" id="statGrid"></div>
+        </div>
+        <!-- ACHIEVEMENTS — swap the text below for real numbers when you have them (views, years, cities, repeat clients). -->
+        <ul class="about__milestones">
+          <li class="reveal"><b>01</b><p>Started with a phone and a vision — now trusted by businesses across Uganda.</p></li>
+          <li class="reveal"><b>02</b><p>Clients come back for the reshoots — because the films bring them customers.</p></li>
+          <li class="reveal"><b>03</b><p>Fast turnaround, film-grade finish — a finished reel in your inbox within hours.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="services section" id="services" data-scene="03">
+      <div class="wrap">
+        <div class="section__meta reveal">SCENE 03 — THE SHOWREEL</div>
+        <h2 class="section__title reveal">WHAT I <span class="grad">DO</span></h2>
+        <p class="section__lead reveal">Short, sharp and cinematic. One video says more than a hundred posts.</p>
+
+        <ol class="services__list">
+          <li class="reveal">
+            <a href="#work">
+              <span class="svc__num">01</span>
+              <div class="svc__body">
+                <h3>SHOP THE LOOK</h3>
+                <p>Short explanatory videos and illustrative product visuals with cinematic edits — kitchenware, beauty salons, supermarkets, barbers, real estate, hotels &amp; airbnbs.</p>
+                <ul class="svc__list">
+                  <li>On-location shoot, directed by me</li>
+                  <li>Cinematic edit — colour grade + sound</li>
+                  <li>Vertical + square formats, ready to post</li>
+                  <li>Delivered as soon as possible</li>
+                </ul>
+                <span class="svc__tags">KITCHENWARE · SALONS · SUPERMARKETS · BARBERS · REAL ESTATE · HOTELS · AIRBNBS</span>
+              </div>
+              <span class="svc__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a href="#contact">
+              <span class="svc__num">02</span>
+              <div class="svc__body">
+                <h3>SOCIALS, HANDLED</h3>
+                <p>I manage your Instagram, TikTok and YouTube — posting, edits and growth. Monthly agreement so your content never goes quiet.</p>
+                <ul class="svc__list">
+                  <li>Monthly content calendar, planned with you</li>
+                  <li>Edits tailored to each platform</li>
+                  <li>Posting, captions and hashtags handled</li>
+                  <li>Growth report every month</li>
+                </ul>
+                <span class="svc__tags">INSTAGRAM · TIKTOK · YOUTUBE · CONTENT CALENDAR · GROWTH</span>
+              </div>
+              <span class="svc__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a href="#contact">
+              <span class="svc__num">03</span>
+              <div class="svc__body">
+                <h3>EVENTS &amp; MOMENTS</h3>
+                <p>Birthdays, cookouts, brunches, meetups, gatherings. I show up, capture the moment, and hand you a film you'll rewatch.</p>
+                <ul class="svc__list">
+                  <li>Full event film, cut like a movie</li>
+                  <li>Highlight reel for your socials</li>
+                  <li>Key moments captured — speeches, cake, crowd</li>
+                  <li>Fast handover, ready to share</li>
+                </ul>
+                <span class="svc__tags">BIRTHDAYS · COOKOUTS · BRUNCHES · MEETUPS · GATHERINGS</span>
+              </div>
+              <span class="svc__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="reveal">
+            <a href="#contact">
+              <span class="svc__num">04</span>
+              <div class="svc__body">
+                <h3>PICK YOUR PLAN</h3>
+                <p>One-off shoot, or a monthly agreement. Whatever fits your pocket — the quality never drops.</p>
+                <ul class="svc__list">
+                  <li>One-off shoot or monthly agreement</li>
+                  <li>Pricing that fits the scope — no surprises</li>
+                  <li>Revisions until you're happy</li>
+                  <li>You own the film, rights included</li>
+                </ul>
+                <span class="svc__tags">ONE-TIME SHOOT · MONTHLY AGREEMENT</span>
+              </div>
+              <span class="svc__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ WORK ============ -->
+    <section class="work section" id="work" data-scene="04">
+      <div class="wrap">
+        <div class="section__meta reveal">SCENE 04 — THE REELS</div>
+        <h2 class="section__title reveal">THE <span class="grad">REELS</span></h2>
+        <p class="section__lead reveal">Fresh work lands here as it's posted. Tap a reel to watch it on the platform.</p>
+        <div class="work__grid" id="reelGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="process section" id="process" data-scene="05">
+      <div class="wrap process__grid">
+        <div class="process__sticky">
+          <div class="section__meta reveal">SCENE 05 — HOW I WORK</div>
+          <h2 class="section__title reveal">SHOT <span class="grad">TO</span> SCREEN</h2>
+          <p class="reveal">Four steps. No stress. You stay relaxed, I handle the film.</p>
+          <div class="process__line" aria-hidden="true"><i id="processFill"></i></div>
+        </div>
+        <ol class="process__stages">
+          <li class="stage reveal" data-stage="1">
+            <span class="stage__num">01</span>
+            <h3>SHOT</h3>
+            <p>We talk about your business and the vibe. I plan the shots and the story before the camera comes out.</p>
+          </li>
+          <li class="stage reveal" data-stage="2">
+            <span class="stage__num">02</span>
+            <h3>CUT</h3>
+            <p>We film. One session, no stress, you stay relaxed. I direct everything so you look your best.</p>
+          </li>
+          <li class="stage reveal" data-stage="3">
+            <span class="stage__num">03</span>
+            <h3>GRADE</h3>
+            <p>I edit, colour and sound it until it hits. Cinematic look, clean cuts, a message that lands.</p>
+          </li>
+          <li class="stage reveal" data-stage="4">
+            <span class="stage__num">04</span>
+            <h3>RELEASE</h3>
+            <p>You get the film — and I can post it across your socials so it reaches the people who matter.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ WEB / SOFTWARE ============ -->
+    <section class="web section" id="web" data-scene="06">
+      <div class="wrap">
+        <div class="section__meta reveal">SCENE 06 — THE OTHER SKILL</div>
+        <h2 class="section__title reveal">I ALSO <span class="grad">BUILD</span></h2>
+        <p class="section__lead reveal">Videography is the show — but I build websites, mini systems and portfolios for businesses too. Clean, fast, and built to bring in customers.</p>
+        <div class="web__grid">
+          <article class="web__card reveal">
+            <span class="web__num">A</span>
+            <h3>WEBSITES</h3>
+            <p>Fast, modern business websites that look good on every screen and turn visitors into enquiries.</p>
+          </article>
+          <article class="web__card reveal">
+            <span class="web__num">B</span>
+            <h3>MINI SYSTEMS</h3>
+            <p>Small tools that run your business — bookings, orders, records — built around how you actually work.</p>
+          </article>
+          <article class="web__card reveal">
+            <span class="web__num">C</span>
+            <h3>PORTFOLIOS</h3>
+            <p>Personal portfolios that make you look as good online as you do in person.</p>
+          </article>
+        </div>
+        <div class="web__cta reveal">
+          <p>Film <span aria-hidden="true">+</span> website, one person, both skills.</p>
+          <a class="btn btn--gold" href="https://wa.me/256768715617?text=Hey%20Sir%20Abaho!%20I%20want%20to%20talk%20about%20a%20website%20project." target="_blank" rel="noopener">Let's talk</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============ REVIEWS ============ -->
+    <section class="reviews section" id="reviews" data-scene="07">
+      <div class="wrap">
+        <div class="section__meta reveal">SCENE 07 — CLIENT LOVE</div>
+        <h2 class="section__title reveal">CLIENT <span class="grad">LOVE</span></h2>
+        <p class="section__lead reveal">Real messages from real clients — straight from my WhatsApp and Instagram DMs.</p>
+        <div class="reviews__grid" id="reviewGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact section" id="contact" data-scene="08">
+      <div class="wrap contact__inner">
+        <div class="section__meta reveal">FINAL SCENE — LET'S TALK</div>
+        <h2 class="section__title reveal">LET'S <span class="grad">TALK</span></h2>
+        <p class="section__lead reveal">Got a product, a brand, or an event coming up? Message me directly — I reply fast.</p>
+        <div class="contact__actions reveal">
+          <a class="btn btn--wa" href="https://wa.me/256768715617?text=Hey%20Sir%20Abaho!%20I%20saw%20your%20portfolio%20and%20I%27d%20love%20to%20talk%20about%20a%20video%20project." target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2m0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2m4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.2z"/></svg>
+            WhatsApp me — straight to my DM
+          </a>
+          <a class="btn btn--call" href="tel:+256768715617">
+            <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1z"/></svg>
+            Call +256 768 715 617
+          </a>
+        </div>
+        <div class="contact__socials reveal">
+          <!-- SOCIAL LINKS: replace each href="#" with your profile URL, e.g. href="https://instagram.com/yourhandle" -->
+          <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.3-.1 1.7-.1 4.9-.1m0-2.2C8.7 0 8.3 0 7 .1 5.8.1 4.9.3 4.1.6c-.8.3-1.5.8-2.2 1.5C1.2 2.8.7 3.5.4 4.3.1 5.1-.1 6 0 7.2.1 8.5.1 8.9.1 12s0 3.5.1 4.8c.1 1.2.3 2.1.6 2.9.3.8.8 1.5 1.5 2.2.7.7 1.4 1.2 2.2 1.5.8.3 1.7.5 2.9.6 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.2-.1 2.1-.3 2.9-.6.8-.3 1.5-.8 2.2-1.5.7-.7 1.2-1.4 1.5-2.2.3-.8.5-1.7.6-2.9.1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c-.1-1.2-.3-2.1-.6-2.9-.3-.8-.8-1.5-1.5-2.2C21.2 1.2 20.5.7 19.7.4c-.8-.3-1.7-.5-2.9-.6C15.5.1 15.1 0 12 0m0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4m0 10.2a4 4 0 1 1 0-8 4 4 0 0 1 0 8m6.4-10.5a1.4 1.4 0 1 1-2.8 0 1.4 1.4 0 0 1 2.8 0"/></svg></a>
+          <a href="#" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M19.6 6.7a4.8 4.8 0 0 1-3.4-1.4 4.8 4.8 0 0 1-1.4-3.3h-3.3v13.4a2.7 2.7 0 1 1-2.7-2.7c.3 0 .5 0 .8.1V9.3a6 6 0 0 0-.8-.1 6 6 0 1 0 6 6V9.9a7.9 7.9 0 0 0 4.8 1.6V8.2c-.6 0-1.3-.1-1.9-.4v3.4a7.9 7.9 0 0 1-4.8 1.6 5.9 5.9 0 0 1-1.2-.1v3.4c.4.1.8.1 1.2.1a6 6 0 0 0 6-6c0-.3 0-.6-.1-.9z"/></svg></a>
+          <a href="#" aria-label="YouTube" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.2C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12c0 1.9.2 3.9.5 5.8a3 3 0 0 0 2.1 2.2c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.2c.3-1.9.5-3.9.5-5.8s-.2-3.9-.5-5.8M9.6 15.6V8.4L15.8 12z"/></svg></a>
+          <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3-1.9 0-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2 2 0 1 1 0-4.1 2 2 0 0 1 0 4.1zm1.7 13H3.6V9h3.4v11.4zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.5c0 1 .8 1.8 1.8 1.8h20.4c1 0 1.8-.8 1.8-1.8V1.7c0-.9-.8-1.7-1.8-1.7z"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="footer__mark" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="ft-g" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffe37a"/><stop offset="1" stop-color="#a37400"/>
+          </linearGradient>
+          <radialGradient id="ft-f" cx=".5" cy=".45" r=".6">
+            <stop offset="0" stop-color="#f5c518" stop-opacity=".55"/><stop offset="1" stop-color="#f5c518" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <g fill="url(#ft-g)">
+          <path d="M72 170c5-28 11-42 22-49l6-2 6 2c11 7 17 21 22 49z"/>
+          <circle cx="100" cy="82" r="17"/>
+          <path d="M66 89a35 10 0 0 1 68 0z"/>
+        </g>
+        <circle cx="100" cy="100" r="86" fill="url(#ft-f)"/>
+      </svg>
+      SIR-ABAHO
+    </div>
+      <div class="footer__row">
+        <span>© <span id="year">2025</span> SIR-ABAHO — CUT WITH INTENT.</span>
+        <span class="footer__nav"><a href="#work">Work</a> · <a href="#services">Services</a> · <a href="#process">Process</a> · <a href="#web">Web</a> · <a href="#reviews">Reviews</a> · <a href="#contact">Contact</a></span>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ============ FLOATING BUTTONS ============ -->
+  <div class="fab-stack">
+    <a class="fab fab--call" href="tel:+256768715617" aria-label="Call Sir Abaho — +256 768 715 617">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1z"/></svg>
+    </a>
+    <a class="fab fab--wa" href="https://wa.me/256768715617?text=Hey%20Sir%20Abaho!%20I%20saw%20your%20portfolio%20and%20I%27d%20love%20to%20talk%20about%20a%20video%20project." target="_blank" rel="noopener" aria-label="Chat on WhatsApp — direct to Sir Abaho's DM">
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2m0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2m4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.4-3c-.3-.4 0-.5.2-.7l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s1 2.5 1.1 2.7c.1.2 1.9 3 4.7 4.2.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.2z"/></svg>
+    </a>
+  </div>
+
+  <script src="js/videos.js"></script>
+  <script src="js/site-data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
